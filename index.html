@@ -60,12 +60,33 @@
         .item.rarity-3 {
             color: #b0c4de;
         }
+
+        /* Анимация крутящегося колеса */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(1440deg); }
+        }
+
+        .spin-wheel {
+            display: inline-block;
+            width: 200px;
+            height: 200px;
+            background: conic-gradient(#ff4500, #ff6347, #ff4500);
+            border-radius: 50%;
+            margin-top: 20px;
+        }
+
+        .spin-wheel.spinning {
+            animation: spin 3s ease-out;
+        }
+
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Симулятор Круток Honkai: Star Rail</h1>
-        <button class="button" onclick="roll()">Крутить 10 раз!</button>
+        <button class="button" onclick="roll()">Крутить!</button>
+        <div class="spin-wheel" id="spinWheel"></div>
         <div class="results" id="results"></div>
     </div>
 
@@ -89,26 +110,27 @@
 
         function roll() {
             const resultDiv = document.getElementById("results");
+            const spinWheel = document.getElementById("spinWheel");
             resultDiv.innerHTML = ""; // Очистить предыдущие результаты
 
-            const rolls = [];
-            for (let i = 0; i < 10; i++) {
+            // Крутить колесо
+            spinWheel.classList.add("spinning");
+
+            // Через 3 секунды выбрать случайный предмет
+            setTimeout(() => {
+                // Останавливаем анимацию
+                spinWheel.classList.remove("spinning");
+
+                // Выбираем один элемент случайным образом
                 const randomIndex = Math.floor(Math.random() * items.length);
-                rolls.push(items[randomIndex]);
-            }
+                const item = items[randomIndex];
 
-            // Гарантировать хотя бы одну 4★ или выше
-            if (!rolls.some(item => item.rarity >= 4)) {
-                const guaranteedIndex = Math.floor(Math.random() * 9);
-                rolls[guaranteedIndex] = items.filter(item => item.rarity >= 4)[Math.floor(Math.random() * 5)];
-            }
-
-            rolls.forEach(item => {
+                // Отображаем результат
                 const itemDiv = document.createElement("div");
                 itemDiv.className = `item rarity-${item.rarity}`;
                 itemDiv.textContent = item.name;
                 resultDiv.appendChild(itemDiv);
-            });
+            }, 3000); // Задержка 3 секунды для завершения анимации
         }
     </script>
 </body>
