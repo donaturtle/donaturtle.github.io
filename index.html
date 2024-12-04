@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Симулятор Круток Honkai: Star Rail</title>
+    <title>Honkai: Star Rail</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
             text-align: center;
-            background: linear-gradient(135deg, #1e1e2f, #4b0082);
+            background-image: url('background.jpg');
+            background-size: cover; /* Чтобы картинка заполняла весь экран */
+            background-position: center; /* Центрируем картинку */
+            background-attachment: fixed; /* Фиксируем картинку при прокрутке */
             color: #fff;
             margin: 0;
             padding: 20px;
@@ -25,6 +28,9 @@
             padding: 20px;
             border-radius: 15px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         .results {
             margin: 20px 0;
@@ -71,22 +77,26 @@
             display: inline-block;
             width: 200px;
             height: 200px;
-            background: conic-gradient(#ff4500, #ff6347, #ff4500);
+            background-image: url('wheel.png'); /* Укажите путь к изображению колеса */
+            background-size: cover;
+            background-position: center;
             border-radius: 50%;
             margin-top: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); /* Тень для создания глубины */
+            transition: box-shadow 0.3s ease-in-out; /* Плавный переход тени */
         }
 
         .spin-wheel.spinning {
             animation: spin 3s ease-out;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8); /* Усиленная тень во время вращения */
         }
-
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Симулятор Круток Honkai: Star Rail</h1>
-        <button class="button" onclick="roll()">Крутить!</button>
+        <h1>Крути! Крути! Крути!</h1>
         <div class="spin-wheel" id="spinWheel"></div>
+        <button class="button" onclick="roll()">Крутить!</button>
         <div class="results" id="results"></div>
     </div>
 
