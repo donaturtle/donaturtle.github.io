@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Симулятор Круток Honkai: Star Rail</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #1e1e2f, #4b0082);
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2em;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.85);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        .results {
+            margin: 20px 0;
+            font-size: 1.2em;
+        }
+        .button {
+            background: #ff4500;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            color: #fff;
+            margin: 10px 0;
+            box-shadow: 0 5px rgba(0, 0, 0, 0.3);
+            transition: all 0.2s;
+        }
+        .button:hover {
+            background: #ff6347;
+            transform: scale(1.05);
+        }
+        .item {
+            margin: 10px 0;
+            font-size: 20px;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+        }
+        .item.rarity-5 {
+            color: #ffcc00;
+        }
+        .item.rarity-4 {
+            color: #a020f0;
+        }
+        .item.rarity-3 {
+            color: #b0c4de;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Симулятор Круток Honkai: Star Rail</h1>
+        <button class="button" onclick="roll()">Крутить 10 раз!</button>
+        <div class="results" id="results"></div>
+    </div>
+
+    <script>
+        const items = [
+            { name: "5★: Сэле", rarity: 5 },
+            { name: "5★: Цзин Юань", rarity: 5 },
+            { name: "5★: Броня", rarity: 5 },
+            { name: "5★: Гепард", rarity: 5 },
+            { name: "5★: Клара", rarity: 5 },
+            { name: "4★: Наташа", rarity: 4 },
+            { name: "4★: Хук", rarity: 4 },
+            { name: "4★: Дан Хэн", rarity: 4 },
+            { name: "4★: Аста", rarity: 4 },
+            { name: "4★: Сушан", rarity: 4 },
+            { name: "3★: Световой конус: Медитация", rarity: 3 },
+            { name: "3★: Световой конус: Рождение себя", rarity: 3 },
+            { name: "3★: Световой конус: Защита", rarity: 3 },
+            { name: "3★: Световой конус: Ловкость", rarity: 3 }
+        ];
+
+        function roll() {
+            const resultDiv = document.getElementById("results");
+            resultDiv.innerHTML = ""; // Очистить предыдущие результаты
+
+            const rolls = [];
+            for (let i = 0; i < 10; i++) {
+                const randomIndex = Math.floor(Math.random() * items.length);
+                rolls.push(items[randomIndex]);
+            }
+
+            // Гарантировать хотя бы одну 4★ или выше
+            if (!rolls.some(item => item.rarity >= 4)) {
+                const guaranteedIndex = Math.floor(Math.random() * 9);
+                rolls[guaranteedIndex] = items.filter(item => item.rarity >= 4)[Math.floor(Math.random() * 5)];
+            }
+
+            rolls.forEach(item => {
+                const itemDiv = document.createElement("div");
+                itemDiv.className = `item rarity-${item.rarity}`;
+                itemDiv.textContent = item.name;
+                resultDiv.appendChild(itemDiv);
+            });
+        }
+    </script>
+</body>
+</html>
